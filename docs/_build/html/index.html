@@ -1,0 +1,1012 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to information-obfuscation’s documentation! &#8212; information-obfuscation  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-information-obfuscation-s-documentation">
+<h1>Welcome to information-obfuscation’s documentation!<a class="headerlink" href="#welcome-to-information-obfuscation-s-documentation" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="helper.abstract_runner.Runner">
+<em class="property">class </em><code class="sig-prename descclassname">helper.abstract_runner.</code><code class="sig-name descname">Runner</code><span class="sig-paren">(</span><em class="sig-param">args: argparse.Namespace</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.abstract_runner.Runner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract runner class for task training and attribute inference attacks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.build_edges">
+<code class="sig-name descname">build_edges</code><span class="sig-paren">(</span><em class="sig-param">train_ratings: pandas.core.frame.DataFrame</em><span class="sig-paren">)</span> &#x2192; torch.LongTensor<a class="headerlink" href="#helper.abstract_runner.Runner.build_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine to build edges for graph neural networks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>train_ratings</strong> (<em>pd.DataFrame</em>) – train movie ratings</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>edge tensor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.LongTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.build_main_dataset">
+<code class="sig-name descname">build_main_dataset</code><span class="sig-paren">(</span><em class="sig-param">ratings: pandas.core.frame.DataFrame</em>, <em class="sig-param">users: pandas.core.frame.DataFrame</em>, <em class="sig-param">prefetch_to_gpu: bool</em><span class="sig-paren">)</span> &#x2192; torch.utils.data.dataset.Dataset<a class="headerlink" href="#helper.abstract_runner.Runner.build_main_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine to build PyTorch dataset from pandas dataframes for task training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<em>pd.DataFrame</em>) – movie ratings</p></li>
+<li><p><strong>users</strong> (<em>pd.DataFrame</em>) – user data</p></li>
+<li><p><strong>prefetch_to_gpu</strong> (<em>bool</em>) – whether to pre-load data to gpu</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>PyTorch dataset for main task</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.utils.data.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.bulid_adversary_dataset">
+<code class="sig-name descname">bulid_adversary_dataset</code><span class="sig-paren">(</span><em class="sig-param">users: pandas.core.frame.DataFrame</em>, <em class="sig-param">prefetch_to_gpu: bool</em><span class="sig-paren">)</span> &#x2192; torch.utils.data.dataset.Dataset<a class="headerlink" href="#helper.abstract_runner.Runner.bulid_adversary_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine to build PyTorch dataset from pandas dataframes for adversarial task</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>users</strong> (<em>pd.DataFrame</em>) – user data</p></li>
+<li><p><strong>prefetch_to_gpu</strong> (<em>bool</em>) – whether to pre-load data to gpu</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>PyTorch dataset for adversarial task</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.utils.data.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_adv_classification_dataset">
+<em class="property">abstract </em><code class="sig-name descname">get_adv_classification_dataset</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#helper.abstract_runner.Runner.get_adv_classification_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dataset for adversarial task</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dataset for adversarial task</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_adv_optimizer">
+<em class="property">abstract </em><code class="sig-name descname">get_adv_optimizer</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em><span class="sig-paren">)</span> &#x2192; torch.optim.optimizer.Optimizer<a class="headerlink" href="#helper.abstract_runner.Runner.get_adv_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the optimizer corresponding to the adversary model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – sensitive attribute to attack (one of age, gender or occupation)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>optimizer corresponding to the adversary model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.optim.Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_adv_test_routine">
+<em class="property">abstract </em><code class="sig-name descname">get_adv_test_routine</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Callable[[torch.utils.data.dataloader.DataLoader, argparse.Namespace, torch.nn.modules.module.Module, torch.optim.optimizer.Optimizer, rich.progress.Progress, NewType.&lt;locals&gt;.new_type], None]<a class="headerlink" href="#helper.abstract_runner.Runner.get_adv_test_routine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns function to perform adversary evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>function to perform adversary evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Callable[ [ torch.utils.data.DataLoader, argparse.Namespace, torch.nn.Module, torch.optim.Optimizer, Progress, TaskID, ], None, ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_adv_train_routine">
+<em class="property">abstract </em><code class="sig-name descname">get_adv_train_routine</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Callable[[torch.utils.data.dataset.Dataset, argparse.Namespace, torch.nn.modules.module.Module, str, rich.progress.Progress, NewType.&lt;locals&gt;.new_type], Tuple[Dict[str, float], pandas.core.frame.DataFrame]]<a class="headerlink" href="#helper.abstract_runner.Runner.get_adv_train_routine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns function to perform adversary training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>function to perform adversary training</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Callable[ [ torch.utils.data.Dataset, argparse.Namespace, torch.nn.Module, str, Progress, TaskID, ], Tuple[Dict[str, float], pd.DataFrame], ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_adversary_models">
+<em class="property">abstract </em><code class="sig-name descname">get_adversary_models</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em><span class="sig-paren">)</span> &#x2192; List[torch.nn.modules.module.Module]<a class="headerlink" href="#helper.abstract_runner.Runner.get_adversary_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of adversaries attacking different parts of the network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – sensitive attribute to attack (one of age, gender or occupation)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of adversaries</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[torch.nn.Module]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_base_model">
+<em class="property">abstract </em><code class="sig-name descname">get_base_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; torch.nn.modules.module.Module<a class="headerlink" href="#helper.abstract_runner.Runner.get_base_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the base model for main task and optionally adversarial defense branch</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>base model</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_main_dataset">
+<em class="property">abstract </em><code class="sig-name descname">get_main_dataset</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#helper.abstract_runner.Runner.get_main_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns main dataset for objective task</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>main dataset for objective task</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_oracle_adversary_optimizers">
+<em class="property">abstract </em><code class="sig-name descname">get_oracle_adversary_optimizers</code><span class="sig-paren">(</span><em class="sig-param">adversaries: List[torch.nn.modules.module.Module], mode: str</em><span class="sig-paren">)</span> &#x2192; List[torch.optim.optimizer.Optimizer]<a class="headerlink" href="#helper.abstract_runner.Runner.get_oracle_adversary_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of optimizers corresponding to the adversaries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adversaries</strong> (<em>List</em><em>[</em><em>torch.nn.Module</em><em>]</em>) – list of adversaries attacking different parts of the network</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – sensitive attribute to attack (one of age, gender or occupation)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of optimizers</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[torch.optim.Optimizer]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_ordered_adversary_names">
+<em class="property">abstract </em><code class="sig-name descname">get_ordered_adversary_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List[str]<a class="headerlink" href="#helper.abstract_runner.Runner.get_ordered_adversary_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of adversary names, in the same order as the model and optimizer method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of adversary names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_task_optimizer">
+<em class="property">abstract </em><code class="sig-name descname">get_task_optimizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; torch.optim.optimizer.Optimizer<a class="headerlink" href="#helper.abstract_runner.Runner.get_task_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the optimizer corresponding to the task model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>optimizer corresponding to the task model</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>torch.optim.Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_test_routine">
+<em class="property">abstract </em><code class="sig-name descname">get_test_routine</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Callable[[torch.utils.data.dataset.Dataset, argparse.Namespace, torch.nn.modules.module.Module, rich.progress.Progress, NewType.&lt;locals&gt;.new_type], Tuple[Dict[str, float], pandas.core.frame.DataFrame]]<a class="headerlink" href="#helper.abstract_runner.Runner.get_test_routine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns function to perform objective task evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>function to perform objective task evaluation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Callable[ [ torch.utils.data.Dataset, argparse.Namespace, torch.nn.Module, Progress, TaskID, ], Tuple[Dict[str, float], pd.DataFrame], ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.get_train_routine">
+<em class="property">abstract </em><code class="sig-name descname">get_train_routine</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; Callable[[torch.utils.data.dataloader.DataLoader, torch.utils.data.dataloader.DataLoader, argparse.Namespace, torch.nn.modules.module.Module, torch.optim.optimizer.Optimizer, torch.optim.optimizer.Optimizer, rich.progress.Progress, NewType.&lt;locals&gt;.new_type], None]<a class="headerlink" href="#helper.abstract_runner.Runner.get_train_routine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns function to perform objective task training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>function to perform objective task training</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Callable[ [ torch.utils.data.DataLoader, torch.utils.data.DataLoader, argparse.Namespace, torch.nn.Module, torch.optim.Optimizer, torch.optim.Optimizer, Progress, TaskID, ], None, ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.num_adversaries">
+<em class="property">abstract </em><code class="sig-name descname">num_adversaries</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#helper.abstract_runner.Runner.num_adversaries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the numebr of adversaries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>numebr of adversaries</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">refresh=True</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.abstract_runner.Runner.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Running task training, then evaluate adversaries in three sensitive attributes (gender, age, occupation)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>refresh</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to re-initialize model for each sensitive attribute, defaults to True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="helper.abstract_runner.Runner.train_task_with_adversary">
+<code class="sig-name descname">train_task_with_adversary</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em>, <em class="sig-param">dirname: str</em>, <em class="sig-param">refresh=True</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em>, <em class="sig-param">adv_tasks=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.abstract_runner.Runner.train_task_with_adversary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a task, then evaluate adversary performance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> (<em>str</em>) – sensitive attribute to evaluate (one of age, occupation and gender)</p></li>
+<li><p><strong>dirname</strong> (<em>str</em>) – directory to store model checkpoints</p></li>
+<li><p><strong>refresh</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to re-initialize model for each sensitive attribute, defaults to True</p></li>
+<li><p><strong>progress</strong> (<em>rich.progress.Progress</em><em>, </em><em>optional</em>) – progress bar instance, defaults to None</p></li>
+<li><p><strong>task</strong> (<em>rich.progress.TaskID</em><em>, </em><em>optional</em>) – task instance, defaults to None</p></li>
+<li><p><strong>adv_tasks</strong> (<em>list</em><em>, </em><em>optional</em>) – list of adversaries to test, defaults to []</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.GNN">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">GNN</code><span class="sig-paren">(</span><em class="sig-param">embed: int, gnn_layers: int, gnn_type: str, device: Union[str, torch.device]</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-layer Graph Neural Network supporting various neighborhood aggregation methods</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embed</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>gnn_layers</strong> (<em>int</em>) – number of GNN layers</p></li>
+<li><p><strong>gnn_type</strong> (<em>str</em>) – type of GNN</p></li>
+<li><p><strong>device</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>torch.device</em><em>]</em>) – deivce to run the neural network</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – GNN type not recognized</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.GNN.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">embeddings: torch.FloatTensor</em>, <em class="sig-param">edge_index: torch.LongTensor</em><span class="sig-paren">)</span> &#x2192; torch.FloatTensor<a class="headerlink" href="#models.GNN.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate graph-neural encoded embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embeddings</strong> (<em>torch.FloatTensor</em>) – learned embeddings</p></li>
+<li><p><strong>edge_index</strong> (<em>torch.LongTensor</em>) – edge index tensor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>graph-neural encoded embeddings</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.SharedBilinearDecoder">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">SharedBilinearDecoder</code><span class="sig-paren">(</span><em class="sig-param">num_relations: int</em>, <em class="sig-param">num_weights: int</em>, <em class="sig-param">embed_dim: int</em>, <em class="sig-param">args: argparse.Namespace</em><span class="sig-paren">)</span><a class="headerlink" href="#models.SharedBilinearDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decoder where the relationship score is given by a bilinear form
+between the embeddings (i.e., one learned matrix per relationship type).
+Modified from <a class="reference external" href="https://github.com/joeybose/Flexible-Fairness-Constraints">https://github.com/joeybose/Flexible-Fairness-Constraints</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_relations</strong> (<em>int</em>) – number of relations to predict</p></li>
+<li><p><strong>num_weights</strong> (<em>int</em>) – number of base weights</p></li>
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.SharedBilinearDecoder.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">embeds1: torch.FloatTensor</em>, <em class="sig-param">embeds2: torch.FloatTensor</em>, <em class="sig-param">rels: torch.FloatTensor</em><span class="sig-paren">)</span> &#x2192; Tuple[torch.FloatTensor, torch.FloatTensor]<a class="headerlink" href="#models.SharedBilinearDecoder.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict scoring by weighted sum of score probabilities and score as well as computing the NLL loss.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embeds1</strong> (<em>torch.FloatTensor</em>) – the first embedding in biliear form</p></li>
+<li><p><strong>embeds2</strong> (<em>torch.FloatTensor</em>) – the second embedding in biliear form</p></li>
+<li><p><strong>rels</strong> (<em>torch.FloatTensor</em>) – All relationships</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple of loss and predicted score</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[torch.FloatTensor,torch.FloatTensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.SharedBilinearDecoder.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">embeds1: torch.FloatTensor</em>, <em class="sig-param">embeds2: torch.FloatTensor</em><span class="sig-paren">)</span> &#x2192; torch.FloatTensor<a class="headerlink" href="#models.SharedBilinearDecoder.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict scoring by weighted sum of score probabilities and score.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embeds1</strong> (<em>torch.FloatTensor</em>) – the first embedding in biliear form</p></li>
+<li><p><strong>embeds2</strong> (<em>torch.FloatTensor</em>) – the second embedding in biliear form</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predicted scores</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.SimpleGCMC">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">SimpleGCMC</code><span class="sig-paren">(</span><em class="sig-param">decoder: torch.nn.modules.module.Module</em>, <em class="sig-param">embed_dim: int</em>, <em class="sig-param">num_ent: int</em>, <em class="sig-param">encoder=None</em><span class="sig-paren">)</span><a class="headerlink" href="#models.SimpleGCMC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Naive GCMC Encoder-Decoder architecture, as specified in <a class="reference external" href="https://arxiv.org/pdf/1706.02263.pdf">https://arxiv.org/pdf/1706.02263.pdf</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – decoder, usually SharedBilinearDecoder</p></li>
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>num_ent</strong> (<em>int</em>) – number of entities</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em><em>, </em><em>optional</em>) – encoder neural network, if not using default embedding, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.SimpleGCMC.encode">
+<code class="sig-name descname">encode</code><span class="sig-paren">(</span><em class="sig-param">nodes: Union[None, torch.LongTensor]</em><span class="sig-paren">)</span> &#x2192; torch.FloatTensor<a class="headerlink" href="#models.SimpleGCMC.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode nodes using learned embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>torch.LongTensor</em><em>]</em>) – node identities</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>learnable embeddings of nodes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.SimpleGCMC.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">pos_edges: torch.FloatTensor</em>, <em class="sig-param">return_embeds=False</em><span class="sig-paren">)</span> &#x2192; Union[Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor], Tuple[torch.FloatTensor, torch.FloatTensor]]<a class="headerlink" href="#models.SimpleGCMC.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict scores of positive edges</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pos_edges</strong> (<em>torch.FloatTensor</em>) – observed edges</p></li>
+<li><p><strong>return_embeds</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to return head &amp; tail embeddings, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of either loss and predictions, or loss, predictions and head &amp; tail embeddings</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Union[ Tuple[ torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor ], Tuple[torch.FloatTensor, torch.FloatTensor], ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.SimpleGCMC.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">fn: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#models.SimpleGCMC.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model from a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fn</strong> (<em>str</em>) – file location</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.SimpleGCMC.predict_rel">
+<code class="sig-name descname">predict_rel</code><span class="sig-paren">(</span><em class="sig-param">heads: Union[None, torch.LongTensor], tails_embed: torch.FloatTensor</em><span class="sig-paren">)</span> &#x2192; torch.FloatTensor<a class="headerlink" href="#models.SimpleGCMC.predict_rel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict scores based on head and tail embeddings of edges in a node/entries in a matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heads</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>torch.LongTensor</em><em>]</em>) – head embeddings</p></li>
+<li><p><strong>tails_embed</strong> (<em>torch.FloatTensor</em>) – tail embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predicted scores</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.SimpleGCMC.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">fn: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#models.SimpleGCMC.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save model to a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fn</strong> (<em>str</em>) – file location</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.SimpleGCMC.set_mode">
+<code class="sig-name descname">set_mode</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#models.SimpleGCMC.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set mode of network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – sensitive attribute we seek to defend/attack, one of (gender, age, occupation)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.NodeClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">NodeClassifier</code><span class="sig-paren">(</span><em class="sig-param">embed_dim: int</em>, <em class="sig-param">embeddings: torch.FloatTensor</em><span class="sig-paren">)</span><a class="headerlink" href="#models.NodeClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-layer perceptron to predict node-level labels given embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>embeddings</strong> (<em>torch.FloatTensor</em>) – node-level embeddings</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.NodeClassifier.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">features: Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]</em><span class="sig-paren">)</span> &#x2192; Tuple[torch.FloatTensor, Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]]<a class="headerlink" href="#models.NodeClassifier.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict node-level label</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>features</strong> (<em>Tuple</em><em>[ </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em> ]</em>) – Encoded features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predicted node-level label</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[ torch.FloatTensor, Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor], ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.NodeClassifier.set_mode">
+<code class="sig-name descname">set_mode</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#models.NodeClassifier.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set mode of network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – sensitive attribute we seek to defend/attack, one of (gender, age, occupation)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.NeighborClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">NeighborClassifier</code><span class="sig-paren">(</span><em class="sig-param">embed_dim: int</em>, <em class="sig-param">embeddings: torch.FloatTensor</em>, <em class="sig-param">edges: torch.LongTensor</em><span class="sig-paren">)</span><a class="headerlink" href="#models.NeighborClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>A special type of multi-layer perceptron that learns node-level labels from embeddings of its neighbors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>embeddings</strong> (<em>torch.FloatTensor</em>) – node-level embeddings</p></li>
+<li><p><strong>edges</strong> (<em>torch.LongTensor</em>) – edges</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.NeighborClassifier.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">features: Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]</em><span class="sig-paren">)</span><a class="headerlink" href="#models.NeighborClassifier.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict node-level label based on neighborhood-level information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>features</strong> (<em>Tuple</em><em>[ </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em> ]</em>) – Encoded features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predicted node-level label</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[ torch.FloatTensor, Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor], ]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.NeighborClassifier.set_mode">
+<code class="sig-name descname">set_mode</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#models.NeighborClassifier.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set mode of network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – sensitive attribute we seek to defend/attack, one of (gender, age, occupation)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.GAL">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">GAL</code><span class="sig-paren">(</span><em class="sig-param">decoder: torch.nn.modules.module.Module</em>, <em class="sig-param">embed_dim: int</em>, <em class="sig-param">num_ent: int</em>, <em class="sig-param">edges: torch.LongTensor</em>, <em class="sig-param">args: argparse.Namespace</em>, <em class="sig-param">encoder=None</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information Obfuscation, Node Level</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – decoder neural network</p></li>
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>num_ent</strong> (<em>int</em>) – number of entities</p></li>
+<li><p><strong>edges</strong> (<em>torch.LongTensor</em>) – edge tensor</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input arguments</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em><em>, </em><em>optional</em>) – encoder neural network, if not using default embedding, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.GAL.encode">
+<code class="sig-name descname">encode</code><span class="sig-paren">(</span><em class="sig-param">nodes</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GAL.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode nodes using graph neural networks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nodes</strong> (<em>Union</em><em>[</em><em>None</em><em>, </em><em>torch.LongTensor</em><em>]</em>) – node identities</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>learnable, graph-neural embeddings of nodes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>torch.FloatTensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.GAL.forward_attr">
+<code class="sig-name descname">forward_attr</code><span class="sig-paren">(</span><em class="sig-param">user_features: Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]</em><span class="sig-paren">)</span> &#x2192; Tuple[torch.FloatTensor, Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]]<a class="headerlink" href="#models.GAL.forward_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute adversarial loss with respect to user features</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_features</strong> (<em>Tuple</em><em>[</em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>]</em>) – user features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple of adversarial loss and predictions of three sensitive attributes (age, gender, occupation)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[torch.FloatTensor, Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.GAL.set_mode">
+<code class="sig-name descname">set_mode</code><span class="sig-paren">(</span><em class="sig-param">mode: str</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#models.GAL.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set mode of network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – sensitive attribute we seek to defend/attack, one of (gender, age, occupation)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.GAL_Neighbor">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">GAL_Neighbor</code><span class="sig-paren">(</span><em class="sig-param">decoder</em>, <em class="sig-param">embed_dim</em>, <em class="sig-param">num_ent</em>, <em class="sig-param">edges</em>, <em class="sig-param">args</em>, <em class="sig-param">encoder=None</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GAL_Neighbor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information Obfuscation, Neighborhood Level</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – decoder neural network</p></li>
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>num_ent</strong> (<em>int</em>) – number of entities</p></li>
+<li><p><strong>edges</strong> (<em>torch.LongTensor</em>) – edge tensor</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input arguments</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em><em>, </em><em>optional</em>) – encoder neural network, if not using default embedding, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.GAL_Neighbor.forward_attr">
+<code class="sig-name descname">forward_attr</code><span class="sig-paren">(</span><em class="sig-param">user_features</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GAL_Neighbor.forward_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute adversarial loss with respect to user features</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_features</strong> (<em>Tuple</em><em>[</em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>, </em><em>torch.FloatTensor</em><em>]</em>) – user features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple of adversarial loss and predictions of three sensitive attributes (age, gender, occupation)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[torch.FloatTensor, Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="models.GAL_Nhop">
+<em class="property">class </em><code class="sig-prename descclassname">models.</code><code class="sig-name descname">GAL_Nhop</code><span class="sig-paren">(</span><em class="sig-param">decoder</em>, <em class="sig-param">embed_dim</em>, <em class="sig-param">num_ent</em>, <em class="sig-param">edges</em>, <em class="sig-param">args</em>, <em class="sig-param">encoder=None</em>, <em class="sig-param">hop=2</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GAL_Nhop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information Obfuscation, N-Hop Level</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – decoder neural network</p></li>
+<li><p><strong>embed_dim</strong> (<em>int</em>) – embedding dimension</p></li>
+<li><p><strong>num_ent</strong> (<em>int</em>) – number of entities</p></li>
+<li><p><strong>edges</strong> (<em>torch.LongTensor</em>) – edge tensor</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input arguments</p></li>
+<li><p><strong>hop</strong> (<em>int</em><em>, </em><em>defaults to 2</em>) – number of hops to probabilistically sample</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em><em>, </em><em>optional</em>) – encoder neural network, if not using default embedding, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="models.GAL_Nhop.forward_attr">
+<code class="sig-name descname">forward_attr</code><span class="sig-paren">(</span><em class="sig-param">user_features</em><span class="sig-paren">)</span><a class="headerlink" href="#models.GAL_Nhop.forward_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Routine that implements probabilistic n-hop algorithm proposed in our paper.
+Intuitively, this algorithm greedily constructs a path of length n by uniformly picking a neighbor from the current end of the
+path and checking if the node has existed previously in the path, avoiding formation of cycles. Worst-case running time
+of this algorithm is O(n^2), because in each step of the main loop, the algorithm performs O(n) checks in the worst case scenario</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-helper.gcmc"></span><dl class="function">
+<dt id="helper.gcmc.test_gcmc">
+<code class="sig-prename descclassname">helper.gcmc.</code><code class="sig-name descname">test_gcmc</code><span class="sig-paren">(</span><em class="sig-param">dataset</em>, <em class="sig-param">args</em>, <em class="sig-param">model</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.gcmc.test_gcmc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Testing routine for GCMC, Graph Convolutional Matrix Completion
+(<a class="reference external" href="https://arxiv.org/abs/1706.02263v2">https://arxiv.org/abs/1706.02263v2</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>torch.utils.data.Dataset</em>) – Testing dataset for GCMC</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – task model</p></li>
+<li><p><strong>progress</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused, defaults to None</p></li>
+<li><p><strong>task</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple for testing metrics and pandas dataframe confusion matrix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[Dict[str, float], pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper.gcmc.train_gcmc">
+<code class="sig-prename descclassname">helper.gcmc.</code><code class="sig-name descname">train_gcmc</code><span class="sig-paren">(</span><em class="sig-param">data_loader</em>, <em class="sig-param">adv_loader</em>, <em class="sig-param">args</em>, <em class="sig-param">model</em>, <em class="sig-param">optimizer</em>, <em class="sig-param">optimizer_adv</em>, <em class="sig-param">pretrain=False</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.gcmc.train_gcmc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Training routine for GCMC, Graph Convolutional Matrix Completion
+(<a class="reference external" href="https://arxiv.org/abs/1706.02263v2">https://arxiv.org/abs/1706.02263v2</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Data loader for main task</p></li>
+<li><p><strong>adv_loader</strong> (<em>None</em>) – _unused</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – task model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim.Optimizer</em>) – optimizer for task model</p></li>
+<li><p><strong>optimizer_adv</strong> (<em>None</em>) – _unused</p></li>
+<li><p><strong>pretrain</strong> (<em>bool</em><em>, </em><em>optional</em>) – _unused</p></li>
+<li><p><strong>progress</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+<li><p><strong>task</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-helper.gradient_descent_ascent"></span><dl class="function">
+<dt id="helper.gradient_descent_ascent.test_gda">
+<code class="sig-prename descclassname">helper.gradient_descent_ascent.</code><code class="sig-name descname">test_gda</code><span class="sig-paren">(</span><em class="sig-param">dataset</em>, <em class="sig-param">args</em>, <em class="sig-param">model</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.gradient_descent_ascent.test_gda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Testing routine for Gradient Descent-Ascent, main algorithm proposed in our work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>torch.utils.data.Dataset</em>) – Testing dataset for Gradient Descent-Ascent</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – task model</p></li>
+<li><p><strong>progress</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused, defaults to None</p></li>
+<li><p><strong>task</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple for testing metrics and pandas dataframe confusion matrix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[Dict[str, float], pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper.gradient_descent_ascent.train_gda">
+<code class="sig-prename descclassname">helper.gradient_descent_ascent.</code><code class="sig-name descname">train_gda</code><span class="sig-paren">(</span><em class="sig-param">data_loader</em>, <em class="sig-param">adv_loader</em>, <em class="sig-param">args</em>, <em class="sig-param">model</em>, <em class="sig-param">optimizer_task</em>, <em class="sig-param">optimizer_adv</em>, <em class="sig-param">pretrain=False</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.gradient_descent_ascent.train_gda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Training routine for Gradient Descent-Ascent, main algorithm proposed in our work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Data loader for main task</p></li>
+<li><p><strong>adv_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Data loader for adversarial defense</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – task model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim.Optimizer</em>) – optimizer for task, having access to GNN and task decoder</p></li>
+<li><p><strong>optimizer_adv</strong> (<em>torch.optim.Optimizer</em>) – optimizer for gradient descent, having access to GNN, Gradient Reversal Layer and simulated oracle adversary</p></li>
+<li><p><strong>pretrain</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to pretrain task without the defense pass</p></li>
+<li><p><strong>progress</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+<li><p><strong>task</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-helper.make_dataset"></span><dl class="function">
+<dt id="helper.make_dataset.make_dataset_1M">
+<code class="sig-prename descclassname">helper.make_dataset.</code><code class="sig-name descname">make_dataset_1M</code><span class="sig-paren">(</span><em class="sig-param">processed=False</em>, <em class="sig-param">seed=42</em><span class="sig-paren">)</span> &#x2192; Tuple[pandas.core.frame.DataFrame, pandas.core.frame.DataFrame, pandas.core.frame.DataFrame, pandas.core.frame.DataFrame]<a class="headerlink" href="#helper.make_dataset.make_dataset_1M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads/Builds the Movielens-1M dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>processed</strong> (<em>bool</em><em>, </em><em>optional</em>) – if the dataset is already built. If so, we will just load them from the local directory, defaults to False</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – random seed for train/validation split, defaults to 42</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pandas dataframes (train_ratings, test_ratings, users, movies) for training, validation and test</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-helper.node_classification"></span><dl class="function">
+<dt id="helper.node_classification.test_node_cls">
+<code class="sig-prename descclassname">helper.node_classification.</code><code class="sig-name descname">test_node_cls</code><span class="sig-paren">(</span><em class="sig-param">test_node_cls_set</em>, <em class="sig-param">args</em>, <em class="sig-param">model</em>, <em class="sig-param">mode='age'</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.node_classification.test_node_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Testing routine for node classification on graphs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_node_cls_set</strong> (<em>torch.utils.data.Dataset</em>) – Testing dataset for node classification</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – task model</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – attribute to classifiy (one of age, gender or occupation), defaults to “age”</p></li>
+<li><p><strong>progress</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused, defaults to None</p></li>
+<li><p><strong>task</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple for testing metrics and pandas dataframe confusion matrix</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[Dict[str, float], pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper.node_classification.train_node_cls">
+<code class="sig-prename descclassname">helper.node_classification.</code><code class="sig-name descname">train_node_cls</code><span class="sig-paren">(</span><em class="sig-param">data_loader</em>, <em class="sig-param">args</em>, <em class="sig-param">model</em>, <em class="sig-param">optimizer</em>, <em class="sig-param">progress=None</em>, <em class="sig-param">task=None</em><span class="sig-paren">)</span><a class="headerlink" href="#helper.node_classification.train_node_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Training routine for node classification on graphs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Data loader for main task</p></li>
+<li><p><strong>args</strong> (<em>argparse.Namespace</em>) – namespace for input parameters</p></li>
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – node classification model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim.Optimizer</em>) – optimizer for node classification model</p></li>
+<li><p><strong>progress</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+<li><p><strong>task</strong> (<em>None</em><em>, </em><em>optional</em>) – _unused</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-helper.optimizers"></span><dl class="function">
+<dt id="helper.optimizers.create_optimizer">
+<code class="sig-prename descclassname">helper.optimizers.</code><code class="sig-name descname">create_optimizer</code><span class="sig-paren">(</span><em class="sig-param">params</em>, <em class="sig-param">mode: str</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span> &#x2192; torch.optim.optimizer.Optimizer<a class="headerlink" href="#helper.optimizers.create_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an optimizer corresponding to the params</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>iterable</em>) – parameters</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – type of optimizers</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – type of optimizer is not recognized</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>optimizer corresponding to the params</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>torch.optim.Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-helper.params"></span><dl class="function">
+<dt id="helper.params.filter_file_existence">
+<code class="sig-prename descclassname">helper.params.</code><code class="sig-name descname">filter_file_existence</code><span class="sig-paren">(</span><em class="sig-param">c: List[str], files: List[pathlib.Path]</em><span class="sig-paren">)</span> &#x2192; List[str]<a class="headerlink" href="#helper.params.filter_file_existence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter for files that are not found</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – list of files to find</p></li>
+<li><p><strong>files</strong> (<em>List</em><em>[</em><em>pathlib.Path</em><em>]</em>) – list of file paths</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of file names that are not found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">information-obfuscation</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Peiyuan Liao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

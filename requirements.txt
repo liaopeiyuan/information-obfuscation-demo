@@ -1,0 +1,11 @@
+pandas==1.0.5
+ipdb==0.13.9
+torch==1.9.0
+numpy==1.16.3
+networkx==2.5
+adabound==0.0.5
+csv_logger==1.0.2
+rich==10.7.0
+scikit_learn==0.24.2
+torch_geometric==1.7.2
+wandb==0.12.0
